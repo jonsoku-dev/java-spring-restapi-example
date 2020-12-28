@@ -20,6 +20,18 @@ spring:
     url: jdbc:h2:mem:testdb
   jpa:
     show-sql: true
+    hibernate:
+      # create: 애플리케이션 로딩 시점에 테이블을 모두 드랍하고 다시 생성
+      # create-drop:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 30
+        jdbc:
+          batch_size: 100
   h2:
     console:
       enabled: true

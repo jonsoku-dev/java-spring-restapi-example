@@ -1,6 +1,7 @@
 package com.tamastudy.myrestfulservices.user;
 
 import com.tamastudy.myrestfulservices.post.Post;
+import com.tamastudy.myrestfulservices.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -21,6 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor
 public class UserJpaController {
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     // http://localhost:8088/jpa/users
     @GetMapping("/users")
@@ -66,12 +68,30 @@ public class UserJpaController {
 
     // /jpa/users/9001/posts
     @GetMapping("/users/{id}/posts")
-    public List<Post> retrieveAllPostsByUser (@PathVariable int id) {
+    public List<Post> retrieveAllPostsByUser(@PathVariable int id) {
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
 
         return user.get().getPosts();
+    }
+
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Post> createPost(@PathVariable int id, @Valid @RequestBody Post post) {
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+
+        post.setUser(user.get());
+        Post savedPost = postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("{id}")
+                .buildAndExpand(savedPost.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 }

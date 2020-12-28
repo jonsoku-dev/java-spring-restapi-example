@@ -6,10 +6,7 @@ import com.tamastudy.myrestfulservices.post.Post;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -27,6 +24,7 @@ import java.util.List;
 public class User {
     @GeneratedValue
     @Id
+    @Column(name = "user_id")
     private Integer id;
     @Size(min = 2, message = "Name은 2글자 이상 입력해 주세요.")
     private String name;
