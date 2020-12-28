@@ -27,6 +27,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.hibernate.validator:hibernate-validator:6.0.22.Final'
+    compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: '1.2.2'
 }
 
 test {
