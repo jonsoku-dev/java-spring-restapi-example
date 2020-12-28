@@ -1,11 +1,13 @@
-package com.tamastudy.myrestfulservices;
+package com.tamastudy.myrestfulservices.helloworld;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // Lombok
-@Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class HelloWorldBean {
     private String message;
 }

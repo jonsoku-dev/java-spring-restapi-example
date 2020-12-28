@@ -1,4 +1,4 @@
-package com.tamastudy.myrestfulservices;
+package com.tamastudy.myrestfulservices.helloworld;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +19,4 @@ public class HelloWorldController {
     ) {
         return new HelloWorldBean(String.format("Hello World, %s", name));
     }
-
-
 }
