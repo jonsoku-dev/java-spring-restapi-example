@@ -1,5 +1,6 @@
 package com.tamastudy.myrestfulservices.user;
 
+import com.tamastudy.myrestfulservices.post.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -61,5 +62,16 @@ public class UserJpaController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    // /jpa/users/9001/posts
+    @GetMapping("/users/{id}/posts")
+    public List<Post> retrieveAllPostsByUser (@PathVariable int id) {
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+
+        return user.get().getPosts();
     }
 }
